@@ -4,19 +4,13 @@
   "description": "The server for an indoor delivery system.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicklasfrahm/indesy-server.git"
   },
-  "keywords": [
-    "server",
-    "application",
-    "indoor",
-    "delivery",
-    "system"
-  ],
+  "keywords": ["server", "application", "indoor", "delivery", "system"],
   "author": "nicklassfrahm",
   "license": "MIT",
   "bugs": {
@@ -24,6 +18,10 @@
   },
   "homepage": "https://github.com/nicklasfrahm/indesy-server#readme",
   "dependencies": {
-    "express": "4.16.2"
+    "express": "4.16.2",
+    "socket.io": "2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "1.12.1"
   }
 }
