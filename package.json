@@ -10,11 +10,20 @@
     "type": "git",
     "url": "git+https://github.com/nicklasfrahm/indesy-server.git"
   },
-  "keywords": ["server", "application", "indoor", "delivery", "system"],
+  "keywords": [
+    "server",
+    "application",
+    "indoor",
+    "delivery",
+    "system"
+  ],
   "author": "nicklassfrahm",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nicklasfrahm/indesy-server/issues"
   },
-  "homepage": "https://github.com/nicklasfrahm/indesy-server#readme"
+  "homepage": "https://github.com/nicklasfrahm/indesy-server#readme",
+  "dependencies": {
+    "express": "4.16.2"
+  }
 }
