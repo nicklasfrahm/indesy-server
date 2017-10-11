@@ -13,13 +13,11 @@ app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/public/index.html`)
 })
 
-/*
 io.on('connection', function(socket) {
   socket.on('sendWifiSignalStrength', data => {
     io.emit('updateWifiSignalStrength', data)
   })
 })
-*/
 
 app.use((err, req, res, next) => {
   if (!err) return res.sendFile(`${__dirname}/public/index.html`)
