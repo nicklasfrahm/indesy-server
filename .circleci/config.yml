@@ -9,31 +9,31 @@ jobs:
     steps:
       - run:
           name: "Stop Deployment"
-          command: ssh -p 61000 root@$SERVER_IP 'cd /opt/indesy && npm run prod:stop || true'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy && npm run prod:stop || true'
       - run:
           name: "Purge Deployment"
-          command: ssh -p 61000 root@$SERVER_IP 'rm -r /opt/indesy || true'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'rm -r /opt/indesy || true'
       - run:
           name: "Clone Repository"
-          command: ssh -p 61000 root@$SERVER_IP 'git clone https://github.com/nicklasfrahm/indesy-server indesy'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'git clone https://github.com/nicklasfrahm/indesy-server indesy'
   install-dependencies:
     <<: *defaults
     steps:
       - run:
           name: "Install Dependencies"
-          command: ssh -p 61000 root@$SERVER_IP 'cd /opt/indesy && npm install || true'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy && npm install || true'
   install-artifacts:
     <<: *defaults
     steps:
       - run:
           name: "Install Artifacts"
-          command: ssh -p 61000 root@$SERVER_IP 'echo "<html><body><h1>Test</h1></body></html>" > /etc/indesy/public/index.html || true'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'echo "<html><body><h1>Test</h1></body></html>" > /etc/indesy/public/index.html || true'
   start-deployment:
     <<: *defaults
     steps:
       - run:
           name: "Start Deployment"
-          command: ssh -p 61000 root@$SERVER_IP 'cd /opt/indesy && npm run prod:start'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy && npm run prod:start'
 workflows:
   version: 2
   deploy-application-stack:
