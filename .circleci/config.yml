@@ -15,7 +15,7 @@ jobs:
           command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'rm -r /opt/indesy || true'
       - run:
           name: "Clone Repository"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'git clone https://github.com/nicklasfrahm/indesy-server indesy'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'git clone https://github.com/nicklasfrahm/indesy-server /opt/indesy'
   install-dependencies:
     <<: *defaults
     steps:
