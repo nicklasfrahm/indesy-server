@@ -4,7 +4,14 @@
   "description": "The server for an indoor delivery system.",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon index.js"
+=======
+    "start": "nodemon index.js",
+    "prod:start": "pm2 start pm2.json",
+    "prod:stop": "pm2 stop pm2.json && pm2 delete pm2.json && pm2 update",
+    "prod:status": "pm2 monit"
+>>>>>>> b0bce03572cb4c4cb9ba208e29ffffd75855b037
   },
   "repository": {
     "type": "git",
