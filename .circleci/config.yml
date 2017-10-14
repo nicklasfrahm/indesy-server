@@ -4,51 +4,46 @@ defaults: &defaults
     - image: circleci/node:7.10
 version: 2
 jobs:
+  pull:
+    <<: *defaults
+    steps:
+      - run:
+          name: "Pull Repository"
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy-server && git pull'
   purge:
     <<: *defaults
     steps:
       - run:
-          name: "Stop Deployment"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy && npm run prod:stop || true'
-      - run:
-          name: "Purge Deployment"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'rm -r /opt/indesy || true'
-      - run:
-          name: "Clone Repository"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'git clone https://github.com/nicklasfrahm/indesy-server /opt/indesy'
-  dependencies:
+          name: "Purge Dependencies"
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'rm -r /opt/indesy-server/node_modules'
+  install:
     <<: *defaults
     steps:
       - run:
           name: "Install Dependencies"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy && npm install'
-  artifacts:
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy-server && npm install'
+  reload:
     <<: *defaults
     steps:
       - run:
-          name: "Install Artifacts"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'echo "<html><body><h1>Test</h1></body></html>" > /opt/indesy/public/index.html'
-  deploy:
-    <<: *defaults
-    steps:
-      - run:
-          name: "Start Deployment"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy && npm run prod:start'
+          name: "Reload Deployment"
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'pm2 reload all'
 workflows:
   version: 2
   deploy-application-stack:
     jobs:
+      - pull:
+          filters:
+            branches:
+              only: master
       - purge:
           filters:
             branches:
               only: master
-      - dependencies:
+      - install:
           requires:
+            - pull
             - purge
-      - artifacts:
+      - reload:
           requires:
-            - purge
-      - deploy:
-          requires:
-            - dependencies
-            - artifacts
+            - install

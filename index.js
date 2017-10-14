@@ -6,11 +6,11 @@ const config = require('./config')
 const app = express()
 const server = http.Server(app)
 const io = socketio(server)
-
-app.use(express.static(`${__dirname}/public`))
+const host = config.host || '0.0.0.0'
+const port = config.port || 8080
 
 app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/public/index.html`)
+  res.status(200).json({ message: 'Hello World!' })
 })
 
 io.on('connection', function(socket) {
@@ -20,12 +20,9 @@ io.on('connection', function(socket) {
 })
 
 app.use((err, req, res, next) => {
-  if (!err) return res.sendFile(`${__dirname}/public/index.html`)
-  const errorMessage = `An error occured: ${err.message}\n${err.stack}\n`
-  process.stdout.write(errorMessage)
-  return res.status(500).json({ message: 'An unknown error occured.' })
+  return res.status(500).json({ message: 'An unknown error occured.', err })
 })
 
-server.listen(config.port, () => {
-  process.stdout.write(`Listening on *:${config.port}\n`)
+server.listen(port, host, () => {
+  process.stdout.write(`[Server] Listening on ${host}:${port}\n`)
 })
