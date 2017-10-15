@@ -2,8 +2,8 @@
   "apps": [
     {
       "name": "indesy",
-      "script": "./index.js",
-      "instances": 4,
+      "script": "/opt/indesy-server/index.js",
+      "instances": "max",
       "exec_mode": "cluster"
     }
   ]
