@@ -9,25 +9,25 @@ jobs:
     steps:
       - run:
           name: "Pull Repository"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy-server && git pull'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'cd /opt/indesy-server && git pull'
   purge:
     <<: *defaults
     steps:
       - run:
           name: "Purge Dependencies"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'rm -r /opt/indesy-server/node_modules'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'rm -r /opt/indesy-server/node_modules'
   install:
     <<: *defaults
     steps:
       - run:
           name: "Install Dependencies"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'cd /opt/indesy-server && npm install'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'cd /opt/indesy-server && npm install'
   reload:
     <<: *defaults
     steps:
       - run:
           name: "Reload Deployment"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'pm2 reload all'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'pm2 reload all'
 workflows:
   version: 2
   deploy:
