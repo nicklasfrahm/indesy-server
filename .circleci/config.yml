@@ -30,7 +30,7 @@ jobs:
           command: ssh -p 61000 -o StrictHostKeyChecking=no root@$SERVER_IP 'pm2 reload all'
 workflows:
   version: 2
-  deploy-application-stack:
+  deploy:
     jobs:
       - pull:
           filters:
