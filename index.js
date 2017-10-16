@@ -1,6 +1,7 @@
 const express = require('express')
 const socketio = require('socket.io')
 const http = require('http')
+const winston = require('winston')
 const config = require('./config')
 
 const app = express()
@@ -12,11 +13,13 @@ const port = config.port || 8080
 let connections = 0
 let timer = 0
 
+winston.cli()
+
 io.on('connection', function(connection) {
   const socket = connection
 
   ++connections
-  process.stdout.write('[Server] A websocket client connected.\n')
+  winston.info('[Server] A websocket client connected.')
   if (connections && !timer) {
     timer = setInterval(() => {
       socket.emit('testTimer', { timestamp: Date.now() })
@@ -25,7 +28,7 @@ io.on('connection', function(connection) {
 
   socket.on('disconnect', () => {
     --connections
-    process.stdout.write('[Server] A websocket client disconnected.\n')
+    winston.info('[Server] A websocket client disconnected.')
     if (!connections && timer) {
       clearInterval(timer)
       timer = null
@@ -48,5 +51,5 @@ app.use((err, req, res, next) => {
 })
 
 server.listen(port, host, () => {
-  process.stdout.write(`[Server] Listening on ${host}:${port}\n`)
+  winston.info(`[Server] Listening on ${host}:${port}`)
 })

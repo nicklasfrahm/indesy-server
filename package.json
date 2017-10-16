@@ -10,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/nicklasfrahm/indesy-server.git"
   },
-  "keywords": ["server", "application", "indoor", "delivery", "system"],
+  "keywords": [
+    "server",
+    "application",
+    "indoor",
+    "delivery",
+    "system"
+  ],
   "author": "nicklasfrahm",
   "license": "MIT",
   "bugs": {
@@ -19,7 +25,8 @@
   "homepage": "https://github.com/nicklasfrahm/indesy-server#readme",
   "dependencies": {
     "express": "4.16.2",
-    "socket.io": "2.0.3"
+    "socket.io": "2.0.3",
+    "winston": "2.4.0"
   },
   "devDependencies": {
     "nodemon": "1.12.1"
