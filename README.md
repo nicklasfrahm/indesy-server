@@ -1,4 +1,5 @@
 # INDESY - Indoor delivery system
+[![CircleCI](https://img.shields.io/circleci/project/nicklasfrahm/indesy-server/master.svg?style=flat-square&label=master)](https://circleci.com/gh/nicklasfrahm/indesy-server)
 
 ## Description
 The server for an indoor delivery system. The server will be used to manage mapping data and to control the indoor delivery system.
