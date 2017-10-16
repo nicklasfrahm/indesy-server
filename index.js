@@ -6,7 +6,6 @@ const config = require('./config')
 const app = express()
 const io = socketio({
   path: '/ws',
-  serveClient: false,
   origins: '*'
 })
 
