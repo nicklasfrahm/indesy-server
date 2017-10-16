@@ -4,7 +4,11 @@ const winston = require('winston')
 const config = require('./config')
 
 const app = express()
-const io = socketio({ path: '/ws' })
+const io = socketio({
+  path: '/ws',
+  serveClient: false,
+  origins: '*'
+})
 
 let connections = 0
 let timer = 0
