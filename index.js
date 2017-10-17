@@ -21,8 +21,9 @@ io.on('connection', function(connection) {
   ++connections
   winston.info('[SIO] A websocket client connected.')
   if (connections && !timer) {
+    winston.info('[SIO] Creating timer!')
     timer = setInterval(() => {
-      socket.emit('testTimer', { timestamp: Date.now() })
+      socket.broadcast.emit('testTimer', { timestamp: Date.now() })
     }, 1000)
   }
 
@@ -30,6 +31,7 @@ io.on('connection', function(connection) {
     --connections
     winston.info('[SIO] A websocket client disconnected.')
     if (!connections && timer) {
+      winston.info('[SIO] Deleting timer!')
       clearInterval(timer)
       timer = null
     }
