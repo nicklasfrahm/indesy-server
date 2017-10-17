@@ -5,8 +5,7 @@ const config = require('./config')
 
 const app = express()
 const io = socketio({
-  path: '/ws',
-  origins: '*'
+  path: '/ws'
 })
 
 let connections = 0
