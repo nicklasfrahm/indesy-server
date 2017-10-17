@@ -23,7 +23,7 @@ io.on('connection', function(connection) {
   if (connections && !timer) {
     winston.info('[SIO] Creating timer!')
     timer = setInterval(() => {
-      socket.broadcast.emit('testTimer', { timestamp: Date.now() })
+      io.emit('testTimer', { timestamp: Date.now() })
     }, 1000)
   }
 
