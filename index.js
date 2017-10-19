@@ -1,12 +1,15 @@
 const express = require('express')
 const socketio = require('socket.io')
 const winston = require('winston')
-const config = require('./config')
 
 const app = express()
 const io = socketio({
   path: '/ws'
 })
+const config = {
+  wsPort: process.env.WS_PORT || 9000,
+  apiPort: process.env.API_PORT || 8000
+}
 
 let connections = 0
 let timer = 0
