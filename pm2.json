@@ -2,12 +2,11 @@
   "apps": [
     {
       "name": "indesy-server",
-      "script": "/opt/indesy-server/index.js",
+      "script": "./index.js",
       "instances": 1,
       "exec_mode": "fork",
       "env": {
-        "WS_PORT": 8000,
-        "API_PORT": 9000
+        "PORT": 8000
       }
     }
   ]
