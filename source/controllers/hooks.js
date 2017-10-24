@@ -10,7 +10,7 @@ router.post('/hooks/update', (req, res, next) => {
       .status(403)
       .json({ message: 'This event is not support by this endpoint.' })
   }
-  const signature = req.get('x-hub-signature').split('=')[1] || false
+  const signature = req.get('x-hub-signature')
   if (!signature) {
     return res
       .status(403)
@@ -20,10 +20,10 @@ router.post('/hooks/update', (req, res, next) => {
     .createHash('sha1', githubHookSecret)
     .update(JSON.stringify(req.body))
     .digest('hex')
-  if (hash !== signature) {
+  if (`sha1=${hash}` !== signature) {
     return res.status(403).json({ message: 'The signature is invalid.', hash })
   } else {
-    return res.status(200).json({ message: 'The signature is valid.', hash })
+    return res.status(200).json({ message: 'The signature is valid.' })
   }
 })
 
