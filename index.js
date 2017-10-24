@@ -2,12 +2,13 @@ const express = require('express')
 const socketio = require('socket.io')
 const winston = require('winston')
 const http = require('http')
+const loadMiddlewares = require('./source/middlewares')
+const loadControllers = require('./source/controllers')
 
 const port = process.env.PORT || 8000
 const app = express()
 const server = http.Server(app)
 const io = socketio(server, { path: '/sio' })
-
 let connections = 0
 let timer = 0
 
@@ -38,21 +39,8 @@ io.on('connection', function(connection) {
 })
 
 // express server
-app.get('/api/v1/hello-world', (req, res) => {
-  return res.status(200).json({ message: 'Hello World!' })
-})
-
-app.use((req, res, next) => {
-  winston.info(`[API] Unsupported request to: ${req.baseUrl}${req.url}`)
-  return res
-    .status(404)
-    .jsonp({ message: 'This API endpoint is not supported.' })
-})
-
-app.use((err, req, res, next) => {
-  winston.error(`[API] ${err.message}\n${err.stack}`)
-  return res.status(500).json({ message: 'An unknown error occured.' })
-})
+loadMiddlewares(app)
+loadControllers(app)
 
 server.listen(port, () => {
   winston.info(`[API] Listening on 0.0.0.0:${port}`)
