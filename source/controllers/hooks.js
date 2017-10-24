@@ -17,11 +17,11 @@ router.post('/hooks/update', (req, res, next) => {
       .json({ message: 'This hook requires a valid signature.' })
   }
   const hash = crypto
-    .createHash('sha1', githubHookSecret)
+    .createHmac('sha1', githubHookSecret)
     .update(JSON.stringify(req.body))
     .digest('hex')
   if (`sha1=${hash}` !== signature) {
-    return res.status(403).json({ message: 'The signature is invalid.', hash })
+    return res.status(403).json({ message: 'The signature is invalid.' })
   } else {
     return res.status(200).json({ message: 'The signature is valid.' })
   }
