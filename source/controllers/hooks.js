@@ -21,9 +21,9 @@ router.post('/hooks/update', (req, res, next) => {
     .update(JSON.stringify(req.body))
     .digest('hex')
   if (hash !== signature) {
-    return res.status(403).json({ message: 'The signature is invalid.' })
+    return res.status(403).json({ message: 'The signature is invalid.', hash })
   } else {
-    return res.status(200).json({ message: 'The signature is valid.' })
+    return res.status(200).json({ message: 'The signature is valid.', hash })
   }
 })
 
