@@ -2,6 +2,7 @@
   "apps": [
     {
       "name": "indesy-server",
+      "cwd": "/opt/indesy-server",
       "script": "./index.js",
       "instances": 1,
       "exec_mode": "fork",

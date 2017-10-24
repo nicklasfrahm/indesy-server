@@ -8,7 +8,7 @@ module.exports = exports = app => {
   })
 
   app.use((req, res, next) => {
-    req.winston.error(`[API] Unsupported request to: ${req.baseUrl}${req.url}`)
+    req.winston.error(`[API] Unsupported endpoint: ${req.baseUrl}${req.url}`)
     return res
       .status(404)
       .json({ message: 'This API endpoint is not supported.' })
@@ -16,12 +16,10 @@ module.exports = exports = app => {
 
   app.use((err, req, res, next) => {
     req.winston.error(`[API] ${err.message}\n${err.stack}`)
-    return res
-      .status(500)
-      .json({
-        message: 'An unknown error occured.',
-        error: { stack: err.stack, message: err.message }
-      })
+    return res.status(500).json({
+      message: 'An unknown error occured.',
+      error: { stack: err.stack, message: err.message }
+    })
   })
 
   return app
