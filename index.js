@@ -2,8 +2,12 @@ const express = require('express')
 const socketio = require('socket.io')
 const winston = require('winston')
 const http = require('http')
+const dotenv = require('dotenv')
 const loadMiddlewares = require('./source/middlewares')
 const loadControllers = require('./source/controllers')
+
+dotenv.config()
+winston.cli()
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -11,8 +15,6 @@ const server = http.Server(app)
 const io = socketio(server, { path: '/sio' })
 let connections = 0
 let timer = 0
-
-winston.cli()
 
 // websocket server
 io.on('connection', function(connection) {
