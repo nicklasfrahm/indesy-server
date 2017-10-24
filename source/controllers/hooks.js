@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const crypto = require('crypto')
+const dotenv = require('dotenv').config()
 const router = Router()
+
 const githubHookSecret = process.env.GITHUB_HOOK_SECRET
 
 router.post('/hooks/update', (req, res, next) => {
