@@ -16,7 +16,12 @@ module.exports = exports = app => {
 
   app.use((err, req, res, next) => {
     req.winston.error(`[API] ${err.message}\n${err.stack}`)
-    return res.status(500).json({ message: 'An unknown error occured.' })
+    return res
+      .status(500)
+      .json({
+        message: 'An unknown error occured.',
+        error: { stack: err.stack, message: err.message }
+      })
   })
 
   return app
