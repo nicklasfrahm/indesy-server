@@ -1,8 +1,4 @@
-const hookRouter = require('./hooks')
-
 module.exports = exports = app => {
-  app.use('/api/v1', hookRouter)
-
   app.get('/api/v1/hello-world', (req, res) => {
     return res.status(200).json({ message: 'Hello World!' })
   })
