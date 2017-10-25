@@ -46,12 +46,16 @@ io.on('connection', function(connection) {
   })
 })
 
-// express server
+// set up primitive middlewares
 loadMiddlewares(app)
-loadControllers(app)
 
+// connect webhooks
 app.use(githubHookEmitter)
 
+// set up routing
+loadControllers(app)
+
+// configure event handlers
 githubHookEmitter.on('*', (event, repo, payload) => {
   const { ref } = payload
   const requiredRef = 'refs/heads/master'
