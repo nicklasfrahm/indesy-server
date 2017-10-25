@@ -47,11 +47,11 @@ module.exports = exports = function(options) {
     }
 
     // verify signature header
+    const signature = req.get('x-hub-signature')
+    if (!signature) {
+      return reject('This hook requires a valid signature.')
+    }
     if (options.signature) {
-      const signature = req.get('x-hub-signature')
-      if (!signature) {
-        return reject('This hook requires a valid signature.')
-      }
       const hash = crypto
         .createHmac('sha1', options.secret)
         .update(JSON.stringify(req.body))
