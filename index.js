@@ -53,12 +53,15 @@ app.use(githubHookEmitter)
 
 loadControllers(app)
 
-githubHookEmitter.on('push', (repo, payload) => {
+githubHookEmitter.on('*', (event, repo, payload) => {
   const { ref } = payload
   const requiredRef = 'refs/heads/master'
   const requiredRepo = 'nicklasfrahm/indesy-robot'
+  winston.info(`[GHE] Event: ${event}`)
+  winston.info(`[GHE] Repo: ${repo}`)
+  winston.info(`[GHE] Ref: ${ref}`)
   if (repo === requiredRepo && ref === requiredRef) {
-    winston.info(`[GHE] Triggering update.`)
+    winston.info('[GHE] Triggering update.')
     io.to('robots').emit('update')
   }
 })
