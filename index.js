@@ -48,10 +48,9 @@ io.on('connection', function(connection) {
 
 // express server
 loadMiddlewares(app)
+loadControllers(app)
 
 app.use(githubHookEmitter)
-
-loadControllers(app)
 
 githubHookEmitter.on('*', (event, repo, payload) => {
   const { ref } = payload
