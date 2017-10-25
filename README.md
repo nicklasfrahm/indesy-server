@@ -6,6 +6,15 @@
 The server for an indoor delivery system. The server will be used to manage mapping data and to control the indoor delivery system.
 
 ## Installation
+Create a .env-file and put in the following:
+
+```ini
+GITHUB_HOOK_SECRET=test
+PORT=8000
+```
+
+**Note:** The `GITHUB_HOOK_SECRET` is only needed for the production server. Contact the maintainer, if you want to make deployments.
+
 Be sure to have at least the latest LTS of node installed. Then open a terminal and run:
 ```shell
 npm install
