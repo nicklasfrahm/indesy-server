@@ -22,9 +22,7 @@ module.exports = exports = app => {
   app.use((err, req, res, next) => {
     winston.error(`[API] ${err.message}\n${err.stack}`)
     return res.status(500).json({
-      error: 'An unknown error occured.',
-      message: err.message,
-      stack: err.stack
+      error: 'An unknown error occured.'
     })
   })
 }
