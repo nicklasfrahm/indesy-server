@@ -37,7 +37,7 @@ This model describes a part of the map.
 ```
 
 ### Map
-The latitude and the longitude fix the according chunks in space.
+The latitude and the longitude fix the according chunks in space. The robot is initially calibrated to north and can derive its position from the movement.
 ```
 {
   name: String,

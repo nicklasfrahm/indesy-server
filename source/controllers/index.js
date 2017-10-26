@@ -1,22 +1,28 @@
+const winston = require('winston')
+const paths = require('../api')
+
+winston.cli()
+
 module.exports = exports = app => {
-  app.get('/api/v1/hello-world', (req, res) => {
-    return res.status(200).json({ message: 'Hello World!' })
+  // API test route
+  app.get('/api/v1/status', (req, res) => {
+    return res
+      .status(200)
+      .json({ message: 'The REST API is online and healthy.', paths })
   })
 
+  // 404 responses
   app.use((req, res, next) => {
-    req.winston.error(`[API] Unsupported endpoint: ${req.baseUrl}${req.url}`)
     return res
       .status(404)
-      .json({ message: 'This API endpoint is not supported.' })
+      .json({ error: 'This API endpoint is not supported.' })
   })
 
+  // 500 responses
   app.use((err, req, res, next) => {
-    req.winston.error(`[API] ${err.message}\n${err.stack}`)
+    winston.error(`[API] ${err.message}\n${err.stack}`)
     return res.status(500).json({
-      message: 'An unknown error occured.',
-      error: { stack: err.stack, message: err.message }
+      error: 'An unknown error occured.'
     })
   })
-
-  return app
 }

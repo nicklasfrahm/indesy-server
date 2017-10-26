@@ -16,6 +16,7 @@ module.exports = exports = function(options) {
     throw new TypeError('Options: events must not be empty.')
   }
 
+  // set default values for options
   options.secret = options.secret || ''
   options.uniqueRepo =
     typeof options.uniqueRepo === 'undefined' ? true : options.uniqueRepo
@@ -88,6 +89,7 @@ module.exports = exports = function(options) {
     })
   }
 
+  // inherit event emitter properties
   Object.assign(githubHookHandler, EventEmitter.prototype)
   EventEmitter.call(githubHookHandler)
 
