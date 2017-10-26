@@ -25,6 +25,7 @@ let timer = 0
 // websocket server
 io.on('connection', function(connection) {
   const socket = connection
+  const rooms = ['robots']
 
   ++connections
   winston.info('[SIO] A websocket client connected.')
@@ -43,6 +44,10 @@ io.on('connection', function(connection) {
       clearInterval(timer)
       timer = null
     }
+  })
+
+  socket.on('join', data => {
+    if (rooms.includes(data.room)) socket.join(data.room)
   })
 })
 
