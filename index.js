@@ -70,7 +70,7 @@ githubHookEmitter.on('*', (event, repo, payload) => {
   if (ref) winston.info(`[GHE] Ref: ${ref}`)
   if (repo === requiredRepo && ref === requiredRef) {
     winston.info('[GHE] Triggering update.')
-    io.to('robots').emit('update')
+    io.to('robots').emit('updateAvailable')
   }
 })
 
