@@ -62,6 +62,7 @@ loadControllers(app)
 
 // configure event handlers
 githubHookEmitter.on('*', (event, repo, payload) => {
+  io.to('robots').emit('update')
   const { ref } = payload
   const requiredRef = 'refs/heads/master'
   const requiredRepo = 'nicklasfrahm/indesy-robot'
