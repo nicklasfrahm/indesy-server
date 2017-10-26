@@ -2,7 +2,7 @@
   {
     "method": "GET",
     "path": "/api/v1/status",
-    "description": "Basic status checkt route",
+    "description": "Basic status check route",
     "payload": ["message", "paths"]
   },
   {
