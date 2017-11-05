@@ -1,15 +1,19 @@
 const winston = require('winston')
 const paths = require('../api')
+const robotRouter = require('./robot')
 
 winston.cli()
 
 module.exports = exports = app => {
-  // API test route
+  // status route
   app.get('/api/v1/status', (req, res) => {
     return res
       .status(200)
       .json({ message: 'The REST API is online and healthy.', paths })
   })
+
+  // robot route
+  app.use('/api/v1', robotRouter)
 
   // 404 responses
   app.use((req, res, next) => {
