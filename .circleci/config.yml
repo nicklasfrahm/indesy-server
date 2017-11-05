@@ -6,7 +6,8 @@ version: 2
 jobs:
   reset:
     <<: *defaults
-      -run:
+    steps:
+      - run:
           name: "Reset Repository"
           command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'cd /opt/indesy-server && git reset --hard'
   clean:
