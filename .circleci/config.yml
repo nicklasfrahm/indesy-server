@@ -4,6 +4,17 @@ defaults: &defaults
     - image: circleci/node:7.10
 version: 2
 jobs:
+  reset:
+    <<: *defaults
+      -run:
+          name: "Reset Repository"
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'cd /opt/indesy-server && git reset --hard'
+  clean:
+    <<: *defaults
+    steps:
+      - run:
+          name: "Clean Repository"
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'cd /opt/indesy-server && git clean -nfd'
   pull:
     <<: *defaults
     steps:
@@ -15,7 +26,7 @@ jobs:
     steps:
       - run:
           name: "Purge Dependencies"
-          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'rm -r /opt/indesy-server/node_modules'
+          command: ssh -p 61000 -o StrictHostKeyChecking=no root@${SERVER_IP} 'rm -rf /opt/indesy-server/node_modules ||:'
   install:
     <<: *defaults
     steps:
@@ -32,14 +43,22 @@ workflows:
   version: 2
   deploy:
     jobs:
+      - reset:
+          filters:
+            branches:
+              only: master
+      - clean:
+          filters:
+            branches:
+              only: master
       - pull:
-          filters:
-            branches:
-              only: master
+          requires:
+            - reset
+            - clean
       - purge:
-          filters:
-            branches:
-              only: master
+          requires:
+            - reset
+            - clean
       - install:
           requires:
             - pull
