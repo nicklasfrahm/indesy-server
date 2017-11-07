@@ -14,7 +14,7 @@ router.post('/robots', (req, res, next) => {
     return res.status(400).json({ error: 'The request body is empty.' })
   }
   if (!req.body.name) {
-    return res.status(400).json({ error: 'The name is required.' })
+    return res.status(400).json({ error: 'The name must not be empty.' })
   }
   Robot.create(req.body, (err, doc) => {
     if (err) next(err)
@@ -30,8 +30,18 @@ router.get('/robots/:id', (req, res, next) => {
 })
 
 router.patch('/robots/:id', (req, res, next) => {
+  const tokenRegex = /[a-f0-9]{32}/
   if (!req.body) {
     return res.status(400).json({ error: 'The request body is empty.' })
+  }
+  if (req.body.token && !tokenRegex.test(req.body.token)) {
+    crypto.randomBytes(16, (err, buffer) => {
+      req.body.token = buffer.toString('hex')
+      Robot.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
+        if (err) return next(err)
+        return res.status(200).json(doc)
+      })
+    })
   }
   Robot.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
     if (err) return next(err)
