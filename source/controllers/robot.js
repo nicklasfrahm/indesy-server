@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const crypto = require('crypto')
 const Robot = require('../models/robot')
 const router = Router()
 
@@ -42,11 +43,12 @@ router.patch('/robots/:id', (req, res, next) => {
         return res.status(200).json(doc)
       })
     })
+  } else {
+    Robot.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
+      if (err) return next(err)
+      return res.status(200).json(doc)
+    })
   }
-  Robot.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
-    if (err) return next(err)
-    return res.status(200).json(doc)
-  })
 })
 
 router.delete('/robots/:id', (req, res, next) => {
