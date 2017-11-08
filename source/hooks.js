@@ -1,11 +1,11 @@
 const dotenv = require('dotenv')
 const winston = require('winston')
-const createGithubHookEmitter = require('./hooks/github')
+const GithubHook = require('./hooks/github')
 
 winston.cli()
 dotenv.config()
 
-const githubHookEmitter = createGithubHookEmitter({
+const githubHookEmitter = new GithubHook({
   path: '/api/v1/hooks/update',
   events: ['push', 'ping'],
   secret: process.env.GITHUB_HOOK_SECRET || ''

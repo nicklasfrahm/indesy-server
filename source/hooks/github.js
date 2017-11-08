@@ -22,9 +22,9 @@ module.exports = exports = function(options) {
     typeof options.uniqueRepo === 'undefined' ? true : options.uniqueRepo
 
   function githubHookHandler(req, res, next) {
-    function reject(message) {
-      githubHookHandler.emit('error', new Error(message), req, res)
-      return res.status(403).json({ message })
+    function reject(code, error) {
+      githubHookHandler.emit('error', new Error(error), req, res)
+      return res.status(code).json({ error })
     }
 
     // verify method and URL
@@ -35,22 +35,22 @@ module.exports = exports = function(options) {
     // verify delivery header
     const delivery = req.get('x-github-delivery')
     if (!delivery) {
-      return reject('This endpoint requires a valid delivery ID.')
+      return reject(400, 'This endpoint requires a valid delivery ID.')
     }
 
     // verify event header
     const event = req.get('x-github-event')
     if (!event) {
-      return reject('This endpoint requires a valid event.')
+      return reject(400, 'This endpoint requires a valid event.')
     }
     if (!options.events.includes(event)) {
-      return reject('This endpoint does not support this event.')
+      return reject(400, 'This endpoint does not support this event.')
     }
 
     // verify signature header
     const signature = req.get('x-hub-signature')
     if (!signature) {
-      return reject('This hook requires a valid signature.')
+      return reject(400, 'This hook requires a valid signature.')
     }
     if (options.signature) {
       const hash = crypto
@@ -58,13 +58,13 @@ module.exports = exports = function(options) {
         .update(JSON.stringify(req.body))
         .digest('hex')
       if (`sha1=${hash}` !== signature) {
-        return reject('The signatures could not be verified.')
+        return reject(401, 'The signatures could not be verified.')
       }
     }
 
     // verify body content
     if (!req.body) {
-      return reject('The endpoint did not receive any payload.')
+      return reject(400, 'The endpoint did not receive any payload.')
     }
 
     // parse payload
