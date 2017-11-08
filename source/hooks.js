@@ -1,6 +1,6 @@
 const dotenv = require('dotenv')
 const winston = require('winston')
-const GithubHook = require('./hooks/github')
+const GithubHook = require('./util/github')
 
 winston.cli()
 dotenv.config()
