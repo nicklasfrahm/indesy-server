@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const crypto = require('crypto')
-const Robot = require('../models/robot')
+const Model = require('../models/robot')
 
 router.get('/robots', (req, res, next) => {
-  Robot.find({}, (err, docs) => {
+  Model.find({}, (err, docs) => {
     if (err) next(err)
     return res.status(200).json(docs)
   })
@@ -16,14 +16,14 @@ router.post('/robots', (req, res, next) => {
   if (!req.body.name) {
     return res.status(400).json({ error: 'The name must not be empty.' })
   }
-  Robot.create(req.body, (err, doc) => {
+  Model.create(req.body, (err, doc) => {
     if (err) next(err)
     return res.status(200).json(doc)
   })
 })
 
 router.get('/robots/:id', (req, res, next) => {
-  Robot.findById(req.params.id, (err, doc) => {
+  Model.findById(req.params.id, (err, doc) => {
     if (err) next(err)
     return res.status(200).json(doc)
   })
@@ -37,13 +37,13 @@ router.patch('/robots/:id', (req, res, next) => {
   if (req.body.token && !tokenRegex.test(req.body.token)) {
     crypto.randomBytes(16, (err, buffer) => {
       req.body.token = buffer.toString('hex')
-      Robot.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
+      Model.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
         if (err) return next(err)
         return res.status(200).json(doc)
       })
     })
   } else {
-    Robot.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
+    Model.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
       if (err) return next(err)
       return res.status(200).json(doc)
     })
@@ -51,7 +51,7 @@ router.patch('/robots/:id', (req, res, next) => {
 })
 
 router.delete('/robots/:id', (req, res, next) => {
-  Robot.findByIdAndRemove(req.params.id, err => {
+  Model.findByIdAndRemove(req.params.id, err => {
     if (err) return next(err)
     return res
       .status(200)
