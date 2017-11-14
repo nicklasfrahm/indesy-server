@@ -8,7 +8,12 @@ const RobotSchema = new Schema({
   xPos: { type: Number, required: true, default: 0 },
   yPos: { type: Number, required: true, default: 0 },
   angle: { type: Number, required: true, default: 0 },
-  version: { type: String },
+  status: {
+    type: String,
+    required: true,
+    enum: ['Offline', 'Online'],
+    default: 'Offline'
+  },
   token: {
     type: String,
     required: true,
