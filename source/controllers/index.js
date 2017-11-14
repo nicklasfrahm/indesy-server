@@ -1,5 +1,6 @@
 const winston = require('winston')
 const robotRouter = require('./robot')
+const mapRouter = require('./map')
 
 winston.cli()
 
@@ -13,6 +14,7 @@ module.exports = exports = app => {
 
   // api routes
   app.use('/api/v1', robotRouter)
+  app.use('/api/v1', mapRouter)
 
   // 404 responses
   app.use((req, res, next) => {
