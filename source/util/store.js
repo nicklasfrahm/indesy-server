@@ -9,8 +9,13 @@ function Store(storeId) {
     return data[this.storeId][property]
   }
 
-  this.set = function(property, value) {
-    data[this.storeId][property] = value
+  this.set = function(property, value, merge) {
+    const previous = data[this.storeId][property] || {}
+    if (merge) {
+      data[this.storeId][property] = Object.assign(previous, value)
+    } else {
+      data[this.storeId][property] = value
+    }
     return this
   }
 
