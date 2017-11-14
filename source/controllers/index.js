@@ -12,7 +12,7 @@ module.exports = exports = app => {
       .json({ message: 'The REST API is online and healthy.', paths })
   })
 
-  // robot route
+  // api routes
   app.use('/api/v1', robotRouter)
 
   // 404 responses
