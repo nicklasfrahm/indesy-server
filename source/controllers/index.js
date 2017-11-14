@@ -1,5 +1,4 @@
 const winston = require('winston')
-const paths = require('../api')
 const robotRouter = require('./robot')
 
 winston.cli()
@@ -9,7 +8,7 @@ module.exports = exports = app => {
   app.get('/api/v1/status', (req, res) => {
     return res
       .status(200)
-      .json({ message: 'The REST API is online and healthy.', paths })
+      .json({ message: 'The REST API is online and healthy.' })
   })
 
   // api routes
