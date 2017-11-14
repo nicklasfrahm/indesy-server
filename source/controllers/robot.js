@@ -1,7 +1,6 @@
-const { Router } = require('express')
+const router = require('express').Router()
 const crypto = require('crypto')
 const Robot = require('../models/robot')
-const router = Router()
 
 router.get('/robots', (req, res, next) => {
   Robot.find({}, (err, docs) => {
