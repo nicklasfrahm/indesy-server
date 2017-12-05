@@ -31,6 +31,10 @@ module.exports = exports = io => {
       }
     })
 
+    socket.on('controlMovement', data => {
+      socket.broadcast.to('robots').emit('controlMovement', data)
+    })
+
     // permit clients to join rooms if they exist
     socket.on('join', data => {
       if (rooms.includes(data.room)) socket.join(data.room)
